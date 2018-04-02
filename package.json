@@ -1,9 +1,9 @@
 {
-  "name": "adbot",
+  "name": "hubot",
   "version": "0.0.0",
   "private": true,
   "author": "adachi",
-  "description": "adcloud.jp",
+  "description": "xxxxxxxxx.jp",
   "dependencies": {
     "hubot-maps": "0.0.2",
     "hubot-shipit": "~0.2.0",

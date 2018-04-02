@@ -1,0 +1,68 @@
+#!/bin/bash
+#chkconfig: 2345 85 15
+#descpriction: hubot
+#OS Amazon Linux/CentOS6
+
+# source function library
+. /etc/rc.d/init.d/functions
+
+USER=hubot
+DIR=/home/hubot/hubot/
+FILE=slack.sh
+RETVAL=0
+
+start() {
+        echo -n $"Starting hubot: "
+        su -l $USER -c "cd $DIR ; sh $FILE >/dev/null 2>&1 &"
+        RETVAL=$?
+        if [ $RETVAL == 0 ]; then
+          success
+        else
+          failure
+        fi
+        echo
+}
+
+stop() {
+        echo -n $"Stopping hubot: "
+        /usr/bin/pkill -f slack
+        RETVAL=$?
+        if [ $RETVAL == 0 ]; then
+          success
+        else
+          failure
+        fi
+        echo
+}
+
+status() {
+        if /usr/bin/pgrep -f slack > /dev/null
+        then
+          echo -n $"hubot is running: "
+        else
+          echo -n $"hubot is not running: "
+        fi
+        RETVAL=$?
+        echo
+}
+
+case "$1" in
+  start)
+        start
+        ;;
+  stop)
+        stop
+        ;;
+  status)
+        status
+        ;;
+  restart)
+        stop
+        start
+        ;;
+  *)
+        echo -e $"Usage: $0 {start|status|stop|restart}"
+        exit 1
+esac
+
+exit $RETVAL
